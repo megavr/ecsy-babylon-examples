@@ -1,0 +1,36 @@
+{
+  "name": "ecsy-babylon-examples",
+  "version": "0.0.1",
+  "description": "Examples for ecsy-babylon",
+  "main": "",
+  "scripts": {
+    "build": "tsc -p ./src && rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megavr/ecsy-babylon-examples.git"
+  },
+  "keywords": [
+    "ecsy",
+    "babylonjs",
+    "webgl",
+    "webvr"
+  ],
+  "author": "Shang Huang",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/megavr/ecsy-babylon-examples/issues"
+  },
+  "homepage": "https://github.com/megavr/ecsy-babylon-examples#readme",
+  "devDependencies": {
+    "rollup": "^1.26.5",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^4.1.0-beta.2",
+    "@megavr/ecsy-babylon": "0.0.3",
+    "ecsy": "^0.1.4"
+  }
+}
