@@ -5,7 +5,7 @@
     "module": "es2015",
     "rootDir": "./",
     "outDir": "../packages",
-    "declaration": true,
+    "declaration": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitAny": true,

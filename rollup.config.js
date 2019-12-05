@@ -1,16 +1,12 @@
-import resolve from "rollup-plugin-node-resolve";
+import resolve from "@rollup/plugin-node-resolve";
 import { terser } from "rollup-plugin-terser";
 
 const libPlugins = [
   resolve({ browser: true }),
   terser({
-    compress: {
-      drop_console: true
-    },
-    // keep_classnams on ecsy 0.1.4 for https://github.com/MozillaReality/ecsy/issues/124
-    mangle: {
-      keep_classnames: true
-    },
+    compress: { drop_console: true },
+    // mangle:keep_classnames on ecsy 0.1.4 for https://github.com/MozillaReality/ecsy/issues/124
+    mangle: { keep_classnames: true },
     module: true
   })
 ]
@@ -22,15 +18,13 @@ const appExternal = [
 
 const appPlugins = [
   terser({
-    compress: {
-      drop_console: true
-    },
+    compress: { drop_console: true },
     module: true
   })
 ]
 
 const appModulePaths = {
-  "ecsy": "https://ecsy.io/build/ecsy.module.js",
+  "ecsy": "../js-libs/ecsy.module.js",
   "@megavr/ecsy-babylon": "../js-libs/ecsy-babylon.module.js",
 }
 
@@ -65,6 +59,18 @@ export default [
       format: "esm",
     },
   },
+  // docs/js-libs/ecsy.module.js
+  {
+    external: [
+      "ecsy",
+    ],
+    input: "./packages/js-libs/ecsy.module.js",
+    plugins: libPlugins,
+    output: {
+      file: "./docs/js-libs/ecsy.module.js",
+      format: "esm",
+    },
+  },
   // docs/js-libs/ecsy-babylon.module.js
   {
     external: [
@@ -77,7 +83,7 @@ export default [
       file: "./docs/js-libs/ecsy-babylon.module.js",
       format: "esm",
       paths: {
-        "ecsy": "https://ecsy.io/build/ecsy.module.js",
+        "ecsy": "./ecsy.module.js",
         "@babylonjs/core": "./babylon.module.js",
       },
     },
@@ -138,6 +144,17 @@ export default [
     plugins: appPlugins,
     output: {
       file: "./docs/js/app.asset.module.js",
+      format: "esm",
+      paths: appModulePaths,
+    },
+  },
+  // docs/js/app.keyinput.module.js
+  {
+    external: appExternal,
+    input: "./packages/app.keyinput.js",
+    plugins: appPlugins,
+    output: {
+      file: "./docs/js/app.keyinput.module.js",
       format: "esm",
       paths: appModulePaths,
     },

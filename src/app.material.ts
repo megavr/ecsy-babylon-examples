@@ -1,17 +1,13 @@
 import { Game } from "./core/Game";
-import { MeshSystem, LightSystem, MaterialSystem, Camera, Mesh, MeshTypes, Transform, Light, Material } from "@megavr/ecsy-babylon";
+import { MeshSystem, LightSystem, MaterialSystem, Camera, Mesh, MeshTypes, Transform, Light, LightTypes, Material } from "@megavr/ecsy-babylon";
 
 // start app by call game instance
 const game = Game.instance();
 
-// put game in window context for better debugging
-declare global { interface Window { Game: Game; } }
-window.Game = game;
-
-// init game by declare webgl canvas and add systems will be used
+// init game by declare webgl canvas and add component related systems used later
 game.start(document.getElementById("renderCanvas") as HTMLCanvasElement, [MeshSystem, LightSystem, MaterialSystem]);
 
-// add a camera
+// add a camera, up it to the height of eyes at standing human
 const camera = game.createEntity().addComponent(Camera);
 camera.getMutableComponent(Transform).position.y = 1.7;
 
@@ -24,13 +20,14 @@ camera.getMutableComponent(Transform).position.y = 1.7;
 ].forEach(box => {
   const entity = game.createEntity()
     .addComponent(Mesh)
-    .addComponent(Material, { diffuse: box.diffuse });
-  box.x !== undefined && (entity.getComponent(Transform).position.x = box.x);
-  box.z !== undefined && (entity.getComponent(Transform).position.z = box.z);
+    .addComponent(Material, { color: { diffuse: box.diffuse } });
+  box.x && (entity.getComponent(Transform).position.x = box.x);
+  entity.getComponent(Transform).position.y = 0.5;
+  box.z && (entity.getComponent(Transform).position.z = box.z);
 });
 
-// add a ground with diffuse, specular and bump texture
-const ground = game.createEntity()
+// add a ground with diffuse, specular and bump textures
+game.createEntity()
   .addComponent(Mesh, { type: MeshTypes.Ground, options: { width: 8, height: 8 } })
   .addComponent(Material, {
     texture: {
@@ -40,8 +37,7 @@ const ground = game.createEntity()
     }
   });
 
-ground.getMutableComponent(Transform).position.y = -0.5;
-
-// add hemisphric light
-const hemilight = game.createEntity().addComponent(Light);
-hemilight.getMutableComponent(Light).direction.y = 1;
+// add a greenish point light, make it 1.5x brighter, put it in the up-center of area
+const pointlight = game.createEntity().addComponent(Light, { type: LightTypes.Point, color: { diffuse: "#AAFFAA" } });
+pointlight.getMutableComponent(Light).intensity = 1.5;
+pointlight.getMutableComponent(Transform).position.y = 2;
