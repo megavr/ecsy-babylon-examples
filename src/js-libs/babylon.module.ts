@@ -1,10 +1,10 @@
 export {
   // Core
-  Engine, Scene, AssetsManager,
+  Engine, Scene, AssetsManager, Observable,
   // Math
   Angle, Vector3, Color3, Color4,
   // Camera
-  VRExperienceHelper,
+  FreeCamera,
   // Mesh
   MeshBuilder,
   // Light

@@ -1,14 +1,17 @@
 import resolve from "@rollup/plugin-node-resolve";
 import { terser } from "rollup-plugin-terser";
+import json from "@rollup/plugin-json";
 
 const libPlugins = [
   resolve({ browser: true }),
   terser({
     compress: { drop_console: true },
-    // mangle:keep_classnames on ecsy 0.1.4 for https://github.com/MozillaReality/ecsy/issues/124
+    // on ecsy 0.2.1 for https://github.com/MozillaReality/ecsy/issues/129
     mangle: { keep_classnames: true },
     module: true
-  })
+  }),
+  // required for compile ecsy.module.js
+  json()
 ]
 
 const appExternal = [

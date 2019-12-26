@@ -1,5 +1,5 @@
 import { Game } from "./core/Game";
-import { MeshSystem, LightSystem, MaterialSystem, InputSystem, Camera, Mesh, MeshTypes, Material, Transform, Light, Input, InputTypes } from "@megavr/ecsy-babylon";
+import { MeshSystem, LightSystem, MaterialSystem, InputSystem, Camera, Mesh, MeshTypes, Material, Transform, Light, Input } from "@megavr/ecsy-babylon";
 
 enum Scenes {
   T = "TigerRoom",
@@ -33,13 +33,13 @@ game.createEntity()
   });
 
 // create input for scene T and bind onKey function
-game.createEntity().addComponent(Input, { sceneName: Scenes.T, type: InputTypes.Keyboard, onKey: onKey });
+game.createEntity().addComponent(Input, { sceneName: Scenes.T, onKey: onKey });
 
 // add scene Z
 game.gameSystem.addScene(Scenes.Z);
 
 // create camera of scene Z
-const cameraZ = game.createEntity().addComponent(Camera, { sceneName: Scenes.Z });
+const cameraZ = game.createEntity().addComponent(Camera, { sceneName: Scenes.Z, pointerLock: true });
 cameraZ.getMutableComponent(Transform).position.y = 1.7;
 
 // create light of scene Z
@@ -59,14 +59,19 @@ game.createEntity()
   });
 
 // create input for scene Z and bind onKey function
-game.createEntity().addComponent(Input, { sceneName: Scenes.Z, type: InputTypes.Keyboard, onKey: onKey });
+game.createEntity().addComponent(Input, { sceneName: Scenes.Z, onKey: onKey });
 
 function onKey(key: string, down: boolean) {
   if (down) {
-    if (key === "t" && game.gameSystem.activeSceneName !== Scenes.T) {
-      game.gameSystem.switchScene(Scenes.T, cameraT);
-    } else if (key === "z" && game.gameSystem.activeSceneName !== Scenes.Z) {
-      game.gameSystem.switchScene(Scenes.Z, cameraZ);
+    switch (key) {
+      case "t":
+      case "T":
+        game.gameSystem.activeSceneName !== Scenes.T && game.gameSystem.switchScene(Scenes.T);
+        break;
+      case "z":
+      case "Z":
+        game.gameSystem.activeSceneName !== Scenes.Z && game.gameSystem.switchScene(Scenes.Z);
+        break;
     }
   }
 }

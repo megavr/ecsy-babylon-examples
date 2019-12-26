@@ -1,5 +1,5 @@
 import { Entity, World } from "ecsy";
-import { GameSystem, Transform, TransformSystem } from "@megavr/ecsy-babylon";
+import { GameSystem, Transform, TransformSystem, CameraSystem } from "@megavr/ecsy-babylon";
 
 export class Game extends World {
   private static _game: Game;
@@ -32,12 +32,14 @@ export class Game extends World {
   /**
    * Start game with an empty scene.
    * @param canvas Canvas for webgl context
-   * @param systems Systems going to used besides GameSystem and TransformSystem
+   * @param systems Systems going to used besides GameSystem, TransformSystem and CameraSystem
    * @param defaultSceneName Name of the scene when system started, default: "Scene1"
    */
   public start(canvas: HTMLCanvasElement, systems: any[], defaultSceneName?: string): Game {
-    this.registerSystem(GameSystem);
-    this.registerSystem(TransformSystem);
+    this
+      .registerSystem(GameSystem)
+      .registerSystem(TransformSystem)
+      .registerSystem(CameraSystem);
     systems.forEach(system => this.registerSystem((system as any)));
     this.gameSystem.start(canvas).addScene(defaultSceneName ? defaultSceneName : "Scene1");
     return this;

@@ -20,3 +20,6 @@ box.getMutableComponent(Transform).scale.y = 2;
 // add a hemisphric light, up light to 1 unit higher
 const hemilight = game.createEntity().addComponent(Light);
 hemilight.getMutableComponent(Light).direction.y = 1;
+
+declare global { interface Window { game: Game; } }
+window.game = game;
