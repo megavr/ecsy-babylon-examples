@@ -7,6 +7,9 @@ const game = Game.instance();
 // init game by declare webgl canvas and add component related systems used later
 game.start(document.getElementById("renderCanvas") as HTMLCanvasElement, [MeshSystem, LightSystem, MaterialSystem, ParticleSystem]);
 
+// add a scene
+game.createScene({ clear: "#17202AFF" });
+
 // add a camera, up it to the height of eyes at standing human
 const camera = game.createEntity().addComponent(Camera);
 camera.getMutableComponent(Transform).position.y = 1.7;

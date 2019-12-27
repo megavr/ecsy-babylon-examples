@@ -1,5 +1,5 @@
 import { Entity, World } from "ecsy";
-import { GameSystem, Transform, TransformSystem, CameraSystem } from "@megavr/ecsy-babylon";
+import { GameSystem, Transform, TransformSystem, CameraSystem, Scene, SceneColorProperties } from "@megavr/ecsy-babylon";
 
 export class Game extends World {
   private static _game: Game;
@@ -33,15 +33,14 @@ export class Game extends World {
    * Start game with an empty scene.
    * @param canvas Canvas for webgl context
    * @param systems Systems going to used besides GameSystem, TransformSystem and CameraSystem
-   * @param defaultSceneName Name of the scene when system started, default: "Scene1"
    */
-  public start(canvas: HTMLCanvasElement, systems: any[], defaultSceneName?: string): Game {
+  public start(canvas: HTMLCanvasElement, systems: any[]): Game {
     this
       .registerSystem(GameSystem)
       .registerSystem(TransformSystem)
       .registerSystem(CameraSystem);
     systems.forEach(system => this.registerSystem((system as any)));
-    this.gameSystem.start(canvas).addScene(defaultSceneName ? defaultSceneName : "Scene1");
+    this.gameSystem.start(canvas);
     return this;
   }
 
@@ -50,8 +49,13 @@ export class Game extends World {
     return super.createEntity().addComponent(Transform);
   }
 
+  /** Create a scene entity. */
+  public createScene(color?: SceneColorProperties): Entity {
+    return super.createEntity().addComponent(Scene, { color: color });
+  }
+
   /** Show Babylon.js insepctor */
   public showDebugger() {
-    this.gameSystem.getScene().debugLayer.show();
+    this.gameSystem.activeScene.debugLayer.show();
   }
 }

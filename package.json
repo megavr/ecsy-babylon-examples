@@ -1,6 +1,6 @@
 {
   "name": "ecsy-babylon-examples",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Examples for ecsy-babylon",
   "main": "",
   "scripts": {
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@babylonjs/core": "^4.1.0-beta.18",
-    "@megavr/ecsy-babylon": "0.0.8",
+    "@megavr/ecsy-babylon": "0.0.9",
     "ecsy": "^0.2.1"
   }
 }
