@@ -54,6 +54,7 @@ export default [
   {
     external: [
       "@babylonjs/core",
+      "@babylonjs/loaders"
     ],
     input: "./packages/js-libs/babylon.module.js",
     plugins: libPlugins,
@@ -118,13 +119,28 @@ export default [
       paths: appModulePaths,
     },
   },
-  // docs/js/app.material.module.js
+  // docs/js/app.asset.js
   {
     external: appExternal,
-    input: "./packages/app.material.js",
+    input: "./packages/app.asset.js",
     plugins: appPlugins,
     output: {
-      file: "./docs/js/app.material.module.js",
+      file: "./docs/js/app.asset.js",
+      format: "iife",
+      name: "app",
+      globals: {
+        "ecsy": "ECSY",
+        "@megavr/ecsy-babylon": "EB",
+      },
+    },
+  },
+  // docs/js/app.asset.module.js
+  {
+    external: appExternal,
+    input: "./packages/app.asset.js",
+    plugins: appPlugins,
+    output: {
+      file: "./docs/js/app.asset.module.js",
       format: "esm",
       paths: appModulePaths,
     },
@@ -136,17 +152,6 @@ export default [
     plugins: appPlugins,
     output: {
       file: "./docs/js/app.particle.module.js",
-      format: "esm",
-      paths: appModulePaths,
-    },
-  },
-  // docs/js/app.asset.module.js
-  {
-    external: appExternal,
-    input: "./packages/app.asset.js",
-    plugins: appPlugins,
-    output: {
-      file: "./docs/js/app.asset.module.js",
       format: "esm",
       paths: appModulePaths,
     },

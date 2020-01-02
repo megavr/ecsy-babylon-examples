@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>ecsy-babylon material example</title>
+  <title>ecsy-babylon mesh, material example</title>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -24,11 +24,15 @@
       touch-action: none;
     }
   </style>
-  <script type="module" src="./js/app.material.module.js"></script>
+  <script src="https://unpkg.com/ecsy@0.2.1/build/ecsy.min.js"></script>
+  <script src="https://unpkg.com/babylonjs@4.1.0-beta.18/babylon.js"></script>
+  <script src="https://unpkg.com/babylonjs-loaders@4.1.0-beta.18/babylonjs.loaders.min.js"></script>
+  <script src="./js-libs/ecsy-babylon.js"></script>
 </head>
 
 <body>
   <canvas id="renderCanvas"></canvas>
+  <script src="./js/app.asset.js"></script>
 </body>
 
 </html>
